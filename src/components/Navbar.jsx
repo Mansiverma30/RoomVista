@@ -3,7 +3,6 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { useState, useEffect, useRef } from "react";
 
 const menuItems = [
-  { title: "Toggle Room Corner", options: ["Right side", "Left side", "No corner"] },
   { title: "Save/Reset", options: ["Save", "Reset", "Export", "Import"] },
 ];
 
@@ -33,7 +32,8 @@ function Navbar() {
   }, [isMenuOpen]);
 
   return (
-    <div className="md:flex md:justify-end md:items-end p-4 relative">
+    <div className="md:flex md:justify-end md:items-end p-4 relative bg-gradient-to-r from-[#F6EEE9] to-[#DED3C7] shadow-md rounded-b-lg">
+      
       {/* Desktop Menu */}
       <div className="hidden md:flex space-x-6">
         {menuItems.map((menu, index) => (
@@ -42,17 +42,16 @@ function Navbar() {
               {menu.title}
               <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
             </MenuButton>
-            <MenuItems className=" mt-2 w-40 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5">
+            <MenuItems className="mt-2 w-40 origin-top-right rounded-md bg-white ring-1 shadow-lg ring-black/5">
               <div className="py-1">
                 {menu.options.map((option, i) => (
                   <MenuItem
-                  key={i}
-                  as="button"
-                  className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
-                >
-                  {option}
-                </MenuItem>
-                
+                    key={i}
+                    as="button"
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                  >
+                    {option}
+                  </MenuItem>
                 ))}
               </div>
             </MenuItems>
@@ -61,13 +60,13 @@ function Navbar() {
       </div>
 
       {/* Mobile Menu Button */}
-      <button onClick={toggleMenu} className="md:hidden text-2xl items-end flex justify-end absolute top-1 right-2">
+      <button onClick={toggleMenu} className="md:hidden text-2xl items-end flex justify-end absolute top-1 right-2 text-white">
         ☰
       </button>
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div ref={menuRef} className="fixed inset-0 bg-white text-[#162020] p-4 md:hidden z-50 flex flex-col items-end space-y-6 transition-all duration-300 ease-in-out">
+        <div ref={menuRef} className="fixed inset-0 bg-gradient-to-b from-[#C1A788] to-[#8D7B68] text-white p-4 md:hidden z-50 flex flex-col items-end space-y-6 transition-all duration-300 ease-in-out">
           <button onClick={toggleMenu} className="text-2xl absolute top-4 right-4">✕</button>
           <nav className="mt-12 flex flex-col space-y-4 w-full items-center">
             {menuItems.map((menu, index) => (
