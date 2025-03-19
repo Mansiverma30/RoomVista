@@ -1,9 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Stage, Layer, Rect, Line, Image, Transformer } from "react-konva";
 import Sidebar from "../components/Sidebar";
-import floor1 from "../assets/floor1.png";
+import sofa1 from "../assets/sofa1.png";
+import floor1 from "../assets/floor1.png"
 
-function Room({ sidebarWidth = 300, src = floor1 }) {
+function Room({ sidebarWidth = 300, src = sofa1, image1 = floor1 }) {
   const stageRef = useRef(null);
   const imageRef = useRef(null);
   const transformerRef = useRef(null);
@@ -14,6 +15,14 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
     width: window.innerWidth - sidebarWidth,
     height: window.innerHeight,
   });
+  const [pattern, setPattern] = useState(null);
+
+  useEffect(() => {
+    const img1 = new window.Image();
+    img1.src = image1;
+    img1.onload = () => setPattern(img1);
+    console.log("Ho raha hai render")
+  }, [image1]);
 
   const cornerOptions = [
     { label: "Left Corner", value: "left" },
@@ -88,6 +97,7 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
             height={dimensions.height - 100}
             fill="#f8ffff"
             stroke="black"
+            
           />
 
           {/* Right Corner Perspective Lines */}
@@ -100,6 +110,7 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
                   dimensions.width - 300,
                   dimensions.height - 250,
                 ]}
+                fillPatternImage={pattern}
                 stroke="black"
                 strokeWidth={2}
               />
@@ -110,6 +121,7 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
                   dimensions.width - 300,
                   dimensions.height - 250,
                 ]}
+                fillPatternImage={pattern}
                 stroke="black"
                 strokeWidth={2}
               />
@@ -122,6 +134,7 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
                 ]}
                 stroke="black"
                 strokeWidth={2}
+                fillPatternImage={pattern}
               />
             </>
           )}
@@ -143,11 +156,13 @@ function Room({ sidebarWidth = 300, src = floor1 }) {
                 points={[10, dimensions.height - 90, 200, dimensions.height - 250]}
                 stroke="black"
                 strokeWidth={2}
+                fillPatternImage={pattern}
               />
               <Line
                 points={[200, dimensions.height * 0.015, 200, dimensions.height - 250]}
                 stroke="black"
                 strokeWidth={2}
+                
               />
             </>
           )}
