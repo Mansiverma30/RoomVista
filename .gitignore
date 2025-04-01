@@ -13,6 +13,9 @@ dist-ssr
 assets.txt
 Example.jsx
 Example1.jsx
+Ex.jsx
+Ex2.jsx
+Ex3.jsx
 *.local
 
 # Editor directories and files
