@@ -11,11 +11,7 @@ node_modules
 dist
 dist-ssr
 assets.txt
-Example.jsx
-Example1.jsx
-Ex.jsx
-Ex2.jsx
-Ex3.jsx
+user_manual.txt
 *.local
 
 # Editor directories and files

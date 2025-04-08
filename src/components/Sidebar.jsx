@@ -1,7 +1,13 @@
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import React, { useState } from "react";
 import products from "./assets";
-function Sidebar({ onAddObject, onChangeFloorTexture, onChangeWallTexture }) {
+function Sidebar({
+  onAddObject,
+  onChangeFloorTexture,
+  onChangeWallTexture,
+  setSelectedFloorSrc,
+  setSelectedWallSrc,
+}) {
   const [openMenus, setOpenMenus] = useState({});
 
   // Toggle the state of a specific menu
@@ -46,8 +52,10 @@ function Sidebar({ onAddObject, onChangeFloorTexture, onChangeWallTexture }) {
                         newImg.crossOrigin = "anonymous";
                         newImg.onload = () => {
                           if (p.prod === "Wall") {
+                            setSelectedWallSrc(img);
                             onChangeWallTexture(newImg);
                           } else if (p.prod === "Floor") {
+                            setSelectedFloorSrc(img);
                             onChangeFloorTexture(newImg);
                           } else {
                             onAddObject({

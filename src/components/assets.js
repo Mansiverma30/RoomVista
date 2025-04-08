@@ -5,9 +5,10 @@ import sofa2 from "../assets/sofa2.png";
 import decor1 from "../assets/decor1.png";
 import decor2 from "../assets/photoframe1.png";
 import floor1 from "../assets/floor1.png";
-import floor2 from "../assets/wall1.png";
+import floor2 from "../assets/floor2.png";
 import wall1 from "../assets/floor1.png";
 import wall2 from "../assets/wall1.png";
+
 
 const products = [
   { prod: "Bed", prodOpt: [bed, bed2] },
