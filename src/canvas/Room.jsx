@@ -135,33 +135,33 @@ function Room({ sidebarWidth = 200, src = products }) {
   /* Loading the floor and wall images and setting them as textures */
   useEffect(() => {
     const floorImg = new window.Image();
-    floorImg.crossOrigin = "anonymous";
-    floorImg.src = floorSrc;
-    floorImg.onload = () => setFloorTexture(floorImg);
-    floorImg.onerror = () => console.error("Failed to load floor texture");
-
     const wallImg = new window.Image();
+
+    floorImg.crossOrigin = "anonymous";
     wallImg.crossOrigin = "anonymous";
-    wallImg.src = wallSrc;
-    wallImg.onload = () => setWallTexture(wallImg);
-    wallImg.onerror = () => console.error("Failed to load wall texture");
+
+    floorImg.src = floorSrc || floor;
+    wallImg.src = wallSrc || wall;
+
+    const handleFloorLoad = () => setFloorTexture(floorImg);
+    const handleWallLoad = () => setWallTexture(wallImg);
+
+    const handleError = (type) => () =>
+      console.error(`Failed to load ${type} texture`);
+
+    floorImg.onload = handleFloorLoad;
+    floorImg.onerror = handleError("floor");
+
+    wallImg.onload = handleWallLoad;
+    wallImg.onerror = handleError("wall");
 
     return () => {
-      floorImg.onload = null;
-      wallImg.onload = null;
+      floorImg.onload = floor;
+      floorImg.onerror = floor;
+      wallImg.onload = wall;
+      wallImg.onerror = wall;
     };
   }, [floorSrc, wallSrc]);
-  const loadImage = (src) =>
-    new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = src;
-      img.onload = () => resolve(img);
-      img.onerror = () => {
-        console.error("Failed to load:", src);
-        resolve(null);
-      };
-    });
 
   // LOAD DESIGN (No need to reload textures manually here)
   useEffect(() => {
@@ -204,11 +204,6 @@ function Room({ sidebarWidth = 200, src = products }) {
 
   // SAVE
   const handleSave = () => {
-    if (!wallSrc?.includes("/assets/") || !floorSrc?.includes("/assets/")) {
-      alert("Please select valid wall and floor textures before saving.");
-      return;
-    }
-
     const designToSave = {
       cornerPosition,
       wallSrc,
@@ -245,14 +240,13 @@ function Room({ sidebarWidth = 200, src = products }) {
   //Export design
   const handleExport = () => {
     if (!stageRef.current) return;
-  
+
     const uri = stageRef.current.toDataURL({ pixelRatio: 2 }); // pixelRatio=2 gives better quality
     const link = document.createElement("a");
     link.download = "roomVista_design.png";
     link.href = uri;
     link.click();
   };
-  
 
   return (
     <div className="bg-gradient-to-b from-[#FDF8F4] to-[#E8DED5] h-full">
@@ -289,8 +283,10 @@ function Room({ sidebarWidth = 200, src = products }) {
         >
           Reset
         </button>
-        <button className="relative py-2 px-6 cursor-pointer text-[#2c2c2c] text-base font-bold rounded-full overflow-hidden bg-white transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-[#2c2c2c] hover:shadow-lg active:scale-90"
-          onClick={handleExport}>
+        <button
+          className="relative py-2 px-6 cursor-pointer text-[#2c2c2c] text-base font-bold rounded-full overflow-hidden bg-white transition-all duration-400 ease-in-out shadow-md hover:scale-105 hover:text-[#2c2c2c] hover:shadow-lg active:scale-90"
+          onClick={handleExport}
+        >
           Export
         </button>
         <UserManual />
