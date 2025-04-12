@@ -5,7 +5,7 @@ import img3 from "../assets/home3.webp";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <div className="bg-gradient-to-b from-[#FDF8F4] to-[#E8DED5] min-h-screen grid grid-rows-[auto_1fr_auto] gap-10 md:gap-20 px-4 md:px-10">
       {/* Navbar - Fixed at the top */}
@@ -25,7 +25,8 @@ function Home() {
             </h1>
             <p className="text-[#444] font-sans text-lg md:text-xl mb-6">
               RoomVista is a simple tool to help you design your room. You can
-              choose from a variety of furniture and decor items to create your dream room.
+              choose from a variety of furniture and decor items to create your
+              dream room.
             </p>
 
             {/* Image Grid for Small Screens (Stacked) */}
@@ -41,7 +42,12 @@ function Home() {
               ))}
             </div>
 
-            <button className="bg-gradient-to-r from-[#B58E72] to-[#8D6E5C] hover:from-[#8D6E5C] hover:to-[#6D4C41] text-white px-6 py-3 rounded w-fit font-serif mt-4 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95" onClick={()=>{navigate('/editor')}}>
+            <button
+              className="bg-gradient-to-r from-[#B58E72] to-[#8D6E5C] hover:from-[#8D6E5C] hover:to-[#6D4C41] text-white px-6 py-3 rounded w-fit font-serif mt-4 shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+              onClick={() => {
+                navigate("/editor");
+              }}
+            >
               Get Started
             </button>
           </div>

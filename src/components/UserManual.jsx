@@ -28,8 +28,7 @@ function UserManual() {
       </button>
 
       {showManual && (
-        <div className="absolute z-50 bg-[#FDF8F4] my-2 p-4 rounded-xl shadow-xl w-96 text-sm text-[#2c2c2c]"
-        >
+        <div className="absolute z-50 bg-[#FDF8F4] my-2 p-4 rounded-xl shadow-xl w-96 text-sm text-[#2c2c2c]">
           <ol className="list-decimal ml-5 space-y-1 text-[#2c2c2c]">
             <li>
               You have the option to select different corners of the room. You
