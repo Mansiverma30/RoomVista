@@ -1,6 +1,6 @@
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import React, { useState } from "react";
-import products from "./assets";
+import { useState } from "react";
+import { products } from "../assets/products.js";
 function Sidebar({
   onAddObject,
   onChangeFloorTexture,
@@ -23,13 +23,13 @@ function Sidebar({
       <h1 className="px-4 py-4 text-2xl font-semibold text-[#2c2c2c]">
         Products
       </h1>
-      {products.map((p, index) => (
+      {Object.entries(products).map(([category, images], index) => (
         <div key={index}>
           <button
             className="flex relative w-full items-center justify-between px-4 py-4 text-xl font-semibold text-[#2c2c2c] hover:bg-gray-200"
             onClick={() => toggleMenu(index)}
           >
-            {p.prod}
+            {category} {/* <-- use category instead of p.prod */}
             <ChevronDownIcon
               aria-hidden="true"
               className={`-mr-1 size-5 text-gray-400 transition-transform ${
@@ -37,10 +37,11 @@ function Sidebar({
               }`}
             />
           </button>
+
           {openMenus[index] && (
             <div className="mt-2 px-4 py-4 rounded-md">
               <ul className="py-1">
-                {p.prodOpt.map((img, imgIndex) => (
+                {images.map((img, imgIndex) => (
                   <li key={imgIndex} className="mb-2">
                     <img
                       src={img}
@@ -51,10 +52,12 @@ function Sidebar({
                         newImg.src = img;
                         newImg.crossOrigin = "anonymous";
                         newImg.onload = () => {
-                          if (p.prod === "Wall") {
+                          if (category === "Wall") {
+                            // <-- use category
                             setSelectedWallSrc(img);
                             onChangeWallTexture(newImg);
-                          } else if (p.prod === "Floor") {
+                          } else if (category === "Floor") {
+                            // <-- use category
                             setSelectedFloorSrc(img);
                             onChangeFloorTexture(newImg);
                           } else {

@@ -1,9 +1,9 @@
-import React, { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Stage, Layer, Shape, Image, Transformer } from "react-konva";
 import Sidebar from "../components/Sidebar";
-import floor from "../assets/floor1.png";
-import wall from "../assets/wall1.png";
-import products from "../components/assets"; // an array of images
+import floor from "/assets/Texture/floor/texture12.jpg";
+import wall from "/assets/Texture/wall/texture1.jpg";
+import { products } from "../assets/products"; // an array of images
 import UserManual from "../components/UserManual";
 
 function Room({ sidebarWidth = 200, src = products }) {
@@ -30,8 +30,8 @@ function Room({ sidebarWidth = 200, src = products }) {
   const [wallTexture, setWallTexture] = useState(null);
 
   // Image sources for the floor and wall
-  const [floorSrc, setFloorSrc] = useState(null);
-  const [wallSrc, setWallSrc] = useState(null);
+  const [floorSrc, setFloorSrc] = useState(floor);
+  const [wallSrc, setWallSrc] = useState(wall);
 
   // Stores the objects (furniture, decorations, etc.) added to the canvas
   const [objects, setObjects] = useState([]);
@@ -143,23 +143,17 @@ function Room({ sidebarWidth = 200, src = products }) {
     floorImg.src = floorSrc || floor;
     wallImg.src = wallSrc || wall;
 
-    const handleFloorLoad = () => setFloorTexture(floorImg);
-    const handleWallLoad = () => setWallTexture(wallImg);
+    floorImg.onload = () => setFloorTexture(floorImg);
+    floorImg.onerror = () => console.error("Failed to load floor texture");
 
-    const handleError = (type) => () =>
-      console.error(`Failed to load ${type} texture`);
-
-    floorImg.onload = handleFloorLoad;
-    floorImg.onerror = handleError("floor");
-
-    wallImg.onload = handleWallLoad;
-    wallImg.onerror = handleError("wall");
+    wallImg.onload = () => setWallTexture(wallImg);
+    wallImg.onerror = () => console.error("Failed to load wall texture");
 
     return () => {
-      floorImg.onload = floor;
-      floorImg.onerror = floor;
-      wallImg.onload = wall;
-      wallImg.onerror = wall;
+      floorImg.onload = null;
+      floorImg.onerror = null;
+      wallImg.onload = null;
+      wallImg.onerror = null;
     };
   }, [floorSrc, wallSrc]);
 
